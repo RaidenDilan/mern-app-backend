@@ -7,7 +7,7 @@ const placesRoutes = require('./routes/places');
 const usersRoutes = require('./routes/users');
 const HttpError = require('./models/http-error');
 const mongoose = require('mongoose');
-const { port, env, dbURI } = require('./config/environment');
+const { port, dbURI } = require('./config/environment');
 
 const app = express();
 
