@@ -3,11 +3,11 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const { port, dbURI } = require('./config/environment');
 const placesRoutes = require('./routes/places');
 const usersRoutes = require('./routes/users');
 const HttpError = require('./models/http-error');
 const mongoose = require('mongoose');
-const { port, dbURI } = require('./config/environment');
 
 const app = express();
 
@@ -41,10 +41,6 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect(dbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true
-  })
+  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
   .then(() => app.listen(port, () => console.log(`Express is listening to port ${port}`)))
   .catch((err) => console.log('Connection failed!', err));
