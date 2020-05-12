@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  if (req.file) fs.unlink(req.file.path, err => console.log(err));
+  if (req.file) fs.unlink(req.file.path, err => console.log('filePath', err));
   if (res.headerSent) return next(err);
 
   res.status(err.code || 500);
