@@ -7,6 +7,7 @@ const placesRoutes = require('./routes/places');
 const usersRoutes = require('./routes/users');
 const HttpError = require('./models/http-error');
 const mongoose = require('mongoose');
+const { port, dbURI } = require('./config/environment');
 
 const app = express();
 
@@ -40,10 +41,10 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect(`mongodb+srv://${ process.env.DB_USER }:${ process.env.DB_PASSWORD }@cluster0-mhonq.mongodb.net/${ process.env.DB_NAME }?retryWrites=true&w=majority`, {
+  .connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true
   })
-  .then(() => app.listen(process.env.PORT || 5000))
+  .then(() => app.listen(port, () => console.log(`Express is listening to port ${port}`)))
   .catch((err) => console.log('Connection failed!', err));
