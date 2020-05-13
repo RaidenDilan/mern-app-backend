@@ -47,7 +47,10 @@ const getPlacesByUserId = async (req, res, next) => {
 
 const createPlace = async (req, res, next) => {
   const errors = validationResult(req);
-  if (!errors.isEmpty()) return next(new HttpError('Invalid inputs passed, please check your data', 422)); // you cna also console log the errors array from the validationResult object.
+  if (!errors.isEmpty()) {
+    const error = new HttpError('Invalid inputs passed, please check your data', 422);  // you can also console log the errors array from the validationResult object.
+    return next(error);
+  }
 
   const { title, description, address } = req.body;
   let coordinates;
