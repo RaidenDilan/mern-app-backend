@@ -3,11 +3,14 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const { port, dbURI } = require('./config/environment');
+const mongoose = require('mongoose');
+
+const { port, dbURI, dbOptions } = require('./config/environment');
+
 const placesRoutes = require('./routes/places');
 const usersRoutes = require('./routes/users');
+
 const HttpError = require('./models/http-error');
-const mongoose = require('mongoose');
 
 const app = express();
 
@@ -33,7 +36,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  if (req.file) fs.unlink(req.file.path, err => console.log('filePath', err));
+  if (req.file) fs.unlink(req.file.path, err => console.log('Signup failed, deleting uploaded image.', err));
   if (res.headerSent) return next(err);
 
   res.status(err.code || 500);
@@ -41,6 +44,6 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+  .connect(dbURI, dbOptions)
   .then(() => app.listen(port, () => console.log(`Express is listening to port ${port}`)))
   .catch((err) => console.log('Connection failed!', err));
