@@ -6,7 +6,6 @@ module.exports = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1]; // Authorization: 'Bearer' token
     if (!token) throw new Error('Authentication failed');
-    console.log('chekc-auth ---', process.env.JWT_KEY);
     const decodedToken = jwt.verify(token, process.env.JWT_KEY);
     req.userData = { userId: decodedToken.userId };
     next();
