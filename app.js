@@ -10,7 +10,7 @@ const { port, dbURI, dbOptions } = require('./config/environment');
 const placesRoutes = require('./routes/places');
 const usersRoutes = require('./routes/users');
 
-const HttpError = require('./models/http-error');
+// const HttpError = require('./models/http-error');
 
 const app = express();
 
