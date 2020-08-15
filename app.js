@@ -1,6 +1,7 @@
-require('dotenv').config();
+// require('dotenv').config();
 const fs = require('fs');
 const path = require('path');
+const cors = require('cors');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -16,6 +17,7 @@ const usersRoutes = require('./routes/users');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 app.use(express.static(path.join('public')));
