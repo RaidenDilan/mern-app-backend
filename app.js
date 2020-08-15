@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 
-const { port, dbURI, dbOptions, clientURL } = require('./config/environment');
+const { port, dbURI, dbOptions } = require('./config/environment');
 
 const placesRoutes = require('./routes/places');
 const usersRoutes = require('./routes/users');
@@ -17,7 +17,7 @@ const usersRoutes = require('./routes/users');
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors({ origin: clientURL }));
+app.use(cors());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 app.use(express.static(path.join('public')));
