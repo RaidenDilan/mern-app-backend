@@ -10,18 +10,18 @@ const MIMI_TYPE_MAP = {
 const fileUpload = multer({
   limits: 500000,
   storage: multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/images'); // null => no error
+    destination: (req, file, next) => {
+      next(null, 'uploads/images'); // null => no error
     },
-    filename: (req, file, cb) => {
+    filename: (req, file, next) => {
       const ext = MIMI_TYPE_MAP[file.mimetype];
-      cb(null, uuid() + '.' + ext);
+      next(null, uuid() + '.' + ext);
     },
   }),
-  fileFilter: (req, file, cb) => {
+  fileFilter: (req, file, next) => {
     const isValid = !!MIMI_TYPE_MAP[file.mimetype]; // !! =< convert undefined/null to true/false/
     let err = isValid ? null : new Error('Invalid mime type');
-    cb(err, isValid);
+    next(err, isValid);
   }
 });
 
